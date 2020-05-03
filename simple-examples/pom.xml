@@ -18,6 +18,12 @@
       <version>${project.version}</version>
     </dependency>
 
+    <dependency>
+      <artifactId>simple-elasticsearch-client</artifactId>
+      <groupId>org.genesys.sdk</groupId>
+      <version>${project.version}</version>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
@@ -25,7 +31,6 @@
       <version>2.13.2</version>
       <scope>runtime</scope>
     </dependency>
-
   </dependencies>
 
 </project>

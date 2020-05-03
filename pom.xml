@@ -12,6 +12,7 @@
   <modules>
     <module>simple-kafka-client</module>
     <module>simple-sqs-client</module>
+    <module>simple-elasticsearch-client</module>
     <module>simple-examples</module>
   </modules>
 
@@ -30,7 +31,6 @@
       <version>1.18.12</version>
       <scope>provided</scope>
     </dependency>
-
   </dependencies>
 
   <build>
