@@ -13,6 +13,7 @@
     <module>simple-kafka-client</module>
     <module>simple-sqs-client</module>
     <module>simple-elasticsearch-client</module>
+    <module>simple-camunda-client</module>
     <module>simple-examples</module>
   </modules>
 
