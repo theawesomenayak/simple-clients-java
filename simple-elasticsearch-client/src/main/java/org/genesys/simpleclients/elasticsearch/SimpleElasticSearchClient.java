@@ -1,52 +1,61 @@
 package org.genesys.simpleclients.elasticsearch;
 
-import java.io.IOException;
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.IndexRequest;
+import co.elastic.clients.json.jackson.JacksonJsonpMapper;
+import co.elastic.clients.transport.ElasticsearchTransport;
+import co.elastic.clients.transport.rest_client.RestClientTransport;
 import java.util.Map;
 import lombok.SneakyThrows;
 import org.apache.http.HttpHost;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentType;
 
 public final class SimpleElasticSearchClient implements AutoCloseable {
 
-  private final RestHighLevelClient client;
+  private final ElasticsearchClient client;
 
   public SimpleElasticSearchClient(final String host, final int port) {
 
-    this.client = new RestHighLevelClient(RestClient.builder(new HttpHost(host, port)));
+    RestClient restClient = RestClient.builder(new HttpHost(host, port)).build();
+    ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
+    this.client =  new ElasticsearchClient(transport);
   }
 
   @SneakyThrows
   public void add(final String index, final String id, final String data) {
 
-    final IndexRequest request = new IndexRequest(index)
-        .id(id)
-        .source(data, XContentType.JSON);
-    client.index(request, RequestOptions.DEFAULT);
+    final IndexRequest<String> request = IndexRequest.of(i -> i
+            .index(index)
+            .id(id)
+            .document(data)
+    );
+    client.index(request);
   }
 
   @SneakyThrows
   public void add(final String index, final String id, final Map<String, Object> data) {
 
-    final IndexRequest request = new IndexRequest(index)
-        .id(id)
-        .source(data);
-    client.index(request, RequestOptions.DEFAULT);
+    final IndexRequest<Map<String, Object>> request = IndexRequest.of(i -> i
+            .index(index)
+            .id(id)
+            .document(data)
+    );
+    client.index(request);
   }
 
   @SneakyThrows
   public void add(final String index, final Map<String, Object> data) {
 
-    final IndexRequest request = new IndexRequest(index).source(data);
-    client.index(request, RequestOptions.DEFAULT);
+    final IndexRequest<Map<String, Object>> request = IndexRequest.of(i -> i
+            .index(index)
+            .document(data)
+    );
+    client.index(request);
   }
 
   @Override
-  public void close() throws IOException {
+  public void close() {
 
-    client.close();
+    client.shutdown();
   }
 }

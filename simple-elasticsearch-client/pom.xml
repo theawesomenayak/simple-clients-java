@@ -12,11 +12,10 @@
   <artifactId>simple-elasticsearch-client</artifactId>
 
   <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.elasticsearch.client/elasticsearch-rest-high-level-client -->
     <dependency>
-      <groupId>org.elasticsearch.client</groupId>
-      <artifactId>elasticsearch-rest-high-level-client</artifactId>
-      <version>7.6.2</version>
+      <groupId>co.elastic.clients</groupId>
+      <artifactId>elasticsearch-java</artifactId>
+      <version>8.2.2</version>
     </dependency>
   </dependencies>
 
